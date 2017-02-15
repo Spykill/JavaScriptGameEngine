@@ -140,7 +140,6 @@
 				{
 					this._gameObjects[i].render(interpolation);
 				}
-
 				this._frame.render();
 			}
 		}
@@ -157,6 +156,7 @@
 				this._physicsbodies.push(gameObject);
 				this.addPhysicsBodyToLists(gameObject);
 			}
+			gameObject.onAddedToScene();
 		}
 
 		/**

@@ -9,16 +9,17 @@
 		{
 			this._goType = E.GameObject.GameObjectType.Object;
 
-			if(parent != null)
-			{
-				parent.addChild(this);
-			}
-
 			this._game = game;
+			this._inScene = false;
 			this.localPosition = localPosition || new THREE.Vector3();
 
 			this._components = new Array();
 			this._children = new Array();
+
+			if(parent)
+			{
+				parent.addChild(this);
+			}
 		}
 
 		/**
@@ -64,6 +65,11 @@
 				obj.localPosition = obj.getGlobalPosition().sub(this.getGlobalPosition());
 			}
 			this._children.push(obj);
+
+			if(this._inScene)
+			{
+				obj.onAddedToScene();
+			}
 		}
 
 		/**
@@ -76,6 +82,10 @@
 			this._components.push(component);
 			component.setOwner(this);
 
+			if(this._inScene)
+			{
+				component.onAddedToScene();
+			}
 			component.onAdded();
 
 			return this;
@@ -90,6 +100,11 @@
 			if (this._components.removeElement(component))
 			{
 				component.onRemoved();
+				if(this._inScene)
+				{
+					component.onRemovedFromScene();
+				}
+				component.setOwner(null);
 			}
 		}
 
@@ -98,6 +113,8 @@
 		 */
 		onAddedToScene()
 		{
+			this._inScene = true;
+
 			for (var i = 0; i < this._components.length; i++)
 			{
 				this._components[i].onAddedToScene();
@@ -113,6 +130,8 @@
 		 */
 		 onRemovedFromScene()
 		 {
+			 this._inScene = false;
+
 			 for (var i = 0; i < this._components.length; i++)
 			 {
 				 this._components[i].onRemovedFromScene();
@@ -130,6 +149,15 @@
 		getObjectType()
 		{
 			return this._goType;
+		}
+
+		/**
+		 * Returns whether this object is in the scene currently.
+		 * @return: bool; Is this object in the scene?
+		 */
+		isInScene()
+		{
+			return this._inScene;
 		}
 
 		/**

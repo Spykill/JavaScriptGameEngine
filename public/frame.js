@@ -18,6 +18,9 @@
 			this._renderer = new THREE.WebGLRenderer();
 			this._renderer.setSize(window.innerWidth, window.innerHeight);
 			document.body.appendChild(this._renderer.domElement);
+
+			var self = this;
+			window.addEventListener("resize", function() { self.onResizeWindow(); } );
 		}
 
 		/**
@@ -26,6 +29,15 @@
 		render()
 		{
 			this._renderer.render(this._scene, this._camera);
+		}
+
+		/**
+		 * Event listener for resizing the window
+		 */
+		onResizeWindow()
+		{
+			this._renderer.setSize(window.innerWidth, window.innerHeight);
+			this._camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 		}
 
 		/**
@@ -53,7 +65,7 @@
 		createInput()
 		{
 			var input = new E.Input();
-			input.setup(this._renderer.domElement);
+			input.setup(document.body);
 			return input;
 		}
 	};

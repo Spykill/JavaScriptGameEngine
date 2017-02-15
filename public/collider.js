@@ -46,7 +46,7 @@
 		translate(v)
 		{
 			var n = this.tl.clone().add(v);
-			return new Rectangle2D(n.x, n.y, this.dim.x, this.dim.y);
+			return new E.Rectangle2D(n.x, n.y, this.dim.x, this.dim.y);
 		}
 
 		intersects(rect)
@@ -70,13 +70,14 @@
 		 */
 		constructor(rect)
 		{
+			super();
 			this._rect = rect;
 		}
 
 		testCollision(us, other, them)
 		{
 			var ourRect = this._rect.translate(us.getGlobalPosition());
-			var theirRect = this._rect.translate(them.getGlobalPosition());
+			var theirRect = other._rect.translate(them.getGlobalPosition());
 
 			var ourCentre = ourRect.getCentre();
 			var theirCentre = theirRect.getCentre();
@@ -130,6 +131,7 @@
 	E.ColliderComponent = class extends E.Component {
 		constructor(collider)
 		{
+			super();
 			this._collider = collider;
 		}
 

@@ -12,21 +12,26 @@ var RunicRealm = (function(M){
 		{
 			var input = this.getOwner().getGame().getInput();
 
+			if(this.getOwner().getObjectType() != Engine.GameObject.GameObjectType.Physics)
+			{
+				return;
+			}
+
 			if(input.isKeyPressed("w"))
 			{
-				this.getOwner().localPosition.add(new THREE.Vector3(0, this.speed * deltaTime));
+				this.getOwner().velocity.add(new THREE.Vector3(0, this.speed * deltaTime));
 			}
 			if(input.isKeyPressed("s"))
 			{
-				this.getOwner().localPosition.add(new THREE.Vector3(0, -this.speed * deltaTime));
+				this.getOwner().velocity.add(new THREE.Vector3(0, -this.speed * deltaTime));
 			}
 			if(input.isKeyPressed("a"))
 			{
-				this.getOwner().localPosition.add(new THREE.Vector3(-this.speed * deltaTime, 0));
+				this.getOwner().velocity.add(new THREE.Vector3(-this.speed * deltaTime, 0));
 			}
 			if(input.isKeyPressed("d"))
 			{
-				this.getOwner().localPosition.add(new THREE.Vector3(this.speed * deltaTime, 0));
+				this.getOwner().velocity.add(new THREE.Vector3(this.speed * deltaTime, 0));
 			}
 		}
 	};
@@ -46,17 +51,18 @@ function startGameModule(game)
 
 		//game.getRenderScene().add(cube);
 
-		var obj = new Engine.GameObject(null, new THREE.Vector3(2,0,5), game);
-		obj.addComponent(new RunicRealm.BasicMoveComponent(1));
-		//obj.addComponent(new )
+		var obj = new Engine.PhysicsBody(null, new THREE.Vector3(2,0,5), game, 1, 0);
+		obj.addComponent(new RunicRealm.BasicMoveComponent(.01));
+		obj.addComponent(new Engine.ColliderComponent(new Engine.ColliderBox2D(new Engine.Rectangle2D(-.5, -1, 1, 2))));
 		obj.addComponent(new Engine.CameraComponent());
 		game.addToGame(obj);
 
 		var child = new Engine.GameObject(obj, new THREE.Vector3(0,0,-5), game);
 		child.addComponent(new Engine.SpriteComponent(null, new THREE.Vector3(1, 2, 1), new THREE.MeshBasicMaterial({color: 0xffffff})));
 
-		obj = new Engine.GameObject(null, new THREE.Vector3(), game);
+		obj = new Engine.PhysicsBody(null, new THREE.Vector3(), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
 		obj.addComponent(new Engine.SpriteComponent(game.getAssetManager().getAsset('derpbutt').getResource(), new THREE.Vector3(1,1, 1)));
+		obj.addComponent(new Engine.ColliderComponent(new Engine.ColliderBox2D(new Engine.Rectangle2D(-.5, -.5, 1, 1))));
 
 		game.addToGame(obj);
 	});

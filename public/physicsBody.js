@@ -1,6 +1,6 @@
 (function(E){
 	E.PhysicsBody = class extends E.GameObject {
-		constructor(parent, localPosition, game, mass, restitution)
+		constructor(parent, localPosition, game, mass, restitution, physicsType)
 		{
 			super(parent, localPosition, game);
 
@@ -9,7 +9,7 @@
 			this._mass = mass;
 			this.restitution = restitution;
 
-			this._type = E.PhysicsBody.PhysicsType.Dynamic;
+			this._type = physicsType || E.PhysicsBody.PhysicsType.Dynamic;
 			this.velocity = new THREE.Vector3();
 
 			this.colliders = new Array();
@@ -105,7 +105,7 @@
 				for(var j = 0; j < body.colliders.length; j++)
 				{
 					var other = body.colliders[j];
-					var collisionData = collider.testCollision(this, other, body);
+					var cd = collider.testCollision(this, other, body);
 
 					if (cd != null)
 					{

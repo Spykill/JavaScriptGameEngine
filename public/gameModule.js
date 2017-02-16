@@ -19,8 +19,8 @@ var RunicRealm = (function(M){
 				return;
 			}
 
-			this.getOwner().velocity.sub(this.getOwner().velocity.clone().normalize().multiplyScalar(Math.min(this.getOwner().velocity.getLength() * this.frictionPercentage, this.maxFriction)));
-			
+			this.getOwner().velocity.sub(this.getOwner().velocity.clone().normalize().multiplyScalar(Math.min(this.getOwner().velocity.length() * this.frictionPercentage, this.maxFriction)));
+
 			if(input.isKeyPressed("w"))
 			{
 				this.getOwner().velocity.add(new THREE.Vector3(0, this.speed * deltaTime));
@@ -62,7 +62,7 @@ function startGameModule(game)
 		//game.getRenderScene().add(cube);
 
 		var obj = new Engine.PhysicsBody(null, new THREE.Vector3(2,0,5), game, 1, 0);
-		obj.addComponent(new RunicRealm.BasicMoveComponent(.01));
+		obj.addComponent(new RunicRealm.BasicMoveComponent(.1, 0.02, 2));
 		obj.addComponent(new Engine.ColliderComponent(new Engine.ColliderBox2D(new Engine.Rectangle2D(-.5, -1, 1, 2))));
 		obj.addComponent(new Engine.CameraComponent());
 		game.addToGame(obj);

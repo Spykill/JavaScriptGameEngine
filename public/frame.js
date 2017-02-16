@@ -5,6 +5,19 @@
 			this._scene = null;
 			this._camera = null;
 			this._renderer = null;
+
+			this._cameraCreator = function(width, height) {
+				return new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+			};
+		}
+
+		setCameraCreator(cameraCreator)
+		{
+			this._cameraCreator = cameraCreator;
+			if (this._camera)
+			{
+				this._camera = this._cameraCreator(window.innerWidth, window.innerHeight);
+			}
 		}
 
 		/**
@@ -13,7 +26,7 @@
 		init()
 		{
 			this._scene = new THREE.Scene();
-			this._camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+			this._camera = this._cameraCreator(window.innerWidth, window.innerHeight);
 
 			this._renderer = new THREE.WebGLRenderer();
 			this._renderer.setSize(window.innerWidth, window.innerHeight);
@@ -37,7 +50,7 @@
 		onResizeWindow()
 		{
 			this._renderer.setSize(window.innerWidth, window.innerHeight);
-			this._camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+			this._camera = this._cameraCreator(window.innerWidth, window.innerHeight);
 		}
 
 		/**

@@ -2,10 +2,12 @@
 var RunicRealm = (function(M){
 	M.BasicMoveComponent = class extends Engine.Component
 	{
-		constructor(speed)
+		constructor(speed, friction, maxFriction)
 		{
 			super();
 			this.speed = speed;
+			this.frictionPercentage = friction;
+			this.maxFriction = maxFriction;
 		}
 
 		update(deltaTime)
@@ -17,6 +19,8 @@ var RunicRealm = (function(M){
 				return;
 			}
 
+			this.getOwner().velocity.sub(this.getOwner().velocity.clone().normalize().multiplyScalar(Math.min(this.getOwner().velocity.getLength() * this.frictionPercentage, this.maxFriction)));
+			
 			if(input.isKeyPressed("w"))
 			{
 				this.getOwner().velocity.add(new THREE.Vector3(0, this.speed * deltaTime));
@@ -36,6 +40,8 @@ var RunicRealm = (function(M){
 		}
 	};
 
+	M.TILE_SIZE = 64;
+
 	return M;
 }(RunicRealm || {}));
 
@@ -44,6 +50,10 @@ function startGameModule(game)
 	game.getAssetManager().addAsset('', 'derpbutt', new Engine.TextureAsset('_assets/derpbutt.png'));
 
 	game.getAssetManager().loadGroupOrdered('', function(){
+
+		game.getFrame().setCameraCreator(function(width, height) {
+			return new THREE.OrthographicCamera(-width / (RunicRealm.TILE_SIZE * 2), width / (RunicRealm.TILE_SIZE * 2), height / (RunicRealm.TILE_SIZE * 2), -height/(RunicRealm.TILE_SIZE * 2));
+		});
 
 		//var geom = new THREE.PlaneGeometry(1,1);
 		//var mat = new THREE.MeshBasicMaterial({color:0xffffff});

@@ -241,6 +241,15 @@
 		}
 
 		/**
+		 * Gets the frame used to render stuff
+		 * @return: Engine.Frame; The frame
+		 */
+		getFrame()
+		{
+			return this._frame;
+		}
+
+		/**
 		 * Gets the input that controls this game
 		 * @return: Engine.Input; The input
 		 */

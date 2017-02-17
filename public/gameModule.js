@@ -70,9 +70,23 @@ function startGameModule(game)
 		var child = new Engine.GameObject(obj, new THREE.Vector3(0,0,-5), game);
 		child.addComponent(new Engine.SpriteComponent(null, new THREE.Vector3(1, 2, 1), new THREE.MeshBasicMaterial({color: 0xffffff})));
 
-		obj = new Engine.PhysicsBody(null, new THREE.Vector3(), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
+		obj = new Engine.PhysicsBody(null, new THREE.Vector3(0,0,0), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
 		obj.addComponent(new Engine.SpriteComponent(game.getAssetManager().getAsset('derpbutt').getResource(), new THREE.Vector3(1,1, 1)));
 		obj.addComponent(new Engine.ColliderComponent(new Engine.ColliderBox2D(new Engine.Rectangle2D(-.5, -.5, 1, 1))));
+				game.addToGame(obj);
+
+		obj = new Engine.PhysicsBody(null, new THREE.Vector3(1,0,0), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
+		obj.addComponent(new Engine.SpriteComponent(game.getAssetManager().getAsset('derpbutt').getResource(), new THREE.Vector3(1,1, 1)));
+		obj.addComponent(new Engine.ColliderComponent(new Engine.ColliderBox2D(new Engine.Rectangle2D(-.5, -.5, 1, 1))));
+				game.addToGame(obj);
+		obj = new Engine.PhysicsBody(null, new THREE.Vector3(2,0,0), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
+		obj.addComponent(new Engine.SpriteComponent(game.getAssetManager().getAsset('derpbutt').getResource(), new THREE.Vector3(1,1, 1)));
+		obj.addComponent(new Engine.ColliderComponent(new Engine.ColliderBox2D(new Engine.Rectangle2D(-.5, -.5, 1, 1))));
+				game.addToGame(obj);
+		obj = new Engine.PhysicsBody(null, new THREE.Vector3(3,0,0), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
+		obj.addComponent(new Engine.SpriteComponent(game.getAssetManager().getAsset('derpbutt').getResource(), new THREE.Vector3(1,1, 1)));
+		obj.addComponent(new Engine.ColliderComponent(new Engine.ColliderBox2D(new Engine.Rectangle2D(-.5, -.5, 1, 1))));
+				game.addToGame(obj);
 
 		game.addToGame(obj);
 	});

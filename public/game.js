@@ -12,7 +12,10 @@
 			this._frame = frame;
 			this._assetManager = new E.AssetManager();
 
-			this._gameTime = Utility.getTime();
+			this._deltaTime = 0;
+			this._lastUpdateTime = Utility.getTime();
+
+			this._gameTime = 0;
 
 			this._gameObjects = new Array();
 			this._physicsbodies = new Array();
@@ -64,19 +67,19 @@
 		_runGameLoop(self)
 		{
 			var newTime = Utility.getTime() * E.Game.TIME_FLT_PNT_ADJ;
-			var deltaTime = (newTime - self._gameTime);
+			this._deltaTime += (newTime - self._lastUpdateTime);
 
 			var frame = 0;
 
-			while (deltaTime > self._updateTime && frame++ < self._frameSkip)
+			while (this._deltaTime > self._updateTime && frame++ < self._frameSkip)
 			{
-				deltaTime -= self._updateTime;
+				this._deltaTime -= self._updateTime;
 				self._gameTime += self._updateTime / E.Game.TIME_FLT_PNT_ADJ;
 
 				self.update(self._updateTime / E.Game.TIME_FLT_PNT_ADJ);
 			}
 
-			self.render(deltaTime > self._updateTime ? 1 : deltaTime / self._updateTime);
+			self.render(this._deltaTime > self._updateTime ? 1 : this._deltaTime / self._updateTime);
 
 			self._input.flush();
 			requestAnimationFrame(function(){ self._runGameLoop(self); });
@@ -92,6 +95,11 @@
 			for (var i = 0; i < this._gameObjects.length; i++)
 			{
 				this._gameObjects[i].update(deltaTime);
+			}
+
+			if(this.network)
+			{
+				this.network.update(this.gameTime);
 			}
 		}
 
@@ -220,6 +228,24 @@
 					this._trigger.push(body);
 					break;
 			}
+		}
+
+		/**
+		 * Sets the networking controller of this game.
+		 * @param network: Engine.Networking; The network
+		 */
+		setNetworking(network)
+		{
+			this.network = network;
+		}
+
+		/**
+		 * Sets the gameTime. This should basically only be used with networking. You better know what you're doing if you use this.
+		 * @param gameTime: float; The game time to set to
+		 */
+		setGameTime(gameTime)
+		{
+			this._gameTime = gameTime;
 		}
 
 		/**

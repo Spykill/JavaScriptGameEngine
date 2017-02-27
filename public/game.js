@@ -81,7 +81,9 @@
 			this.render(this._deltaTime > this._updateTime ? 1 : this._deltaTime / this._updateTime);
 
 			if(this._input)
-			this._input.flush();
+			{
+				this._input.flush();
+			}
 			var self = this;
 			requestAnimationFrame(function(){ self._runGameLoop(); });
 		}

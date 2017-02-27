@@ -61,29 +61,29 @@ function startGameModule(game)
 
 		//game.getRenderScene().add(cube);
 
-		var obj = new Engine.PhysicsBody(null, new THREE.Vector3(2,0,5), game, 1, 0);
+		var obj = new Engine.PhysicsBody(null, null, new THREE.Vector3(2,0,5), game, 1, 0);
 		obj.addComponent(new RunicRealm.BasicMoveComponent(.1, 0.02, 2));
 		obj.addComponent(new Engine.ColliderComponent(new Engine.ColliderBox2D(new Engine.Rectangle2D(-.5, -1, 1, 2))));
 		obj.addComponent(new Engine.CameraComponent());
-		game.addToGame(obj);
+				game.addToGame(obj);
 
-		var child = new Engine.GameObject(obj, new THREE.Vector3(0,0,-5), game);
+		var child = new Engine.GameObject(null, obj, new THREE.Vector3(0,0,-5), game);
 		child.addComponent(new Engine.SpriteComponent(null, new THREE.Vector3(1, 2, 1), new THREE.MeshBasicMaterial({color: 0xffffff})));
 
-		obj = new Engine.PhysicsBody(null, new THREE.Vector3(0,0,0), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
+		obj = new Engine.PhysicsBody(null, null, new THREE.Vector3(0,0,0), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
 		obj.addComponent(new Engine.SpriteComponent(game.getAssetManager().getAsset('derpbutt').getResource(), new THREE.Vector3(1,1, 1)));
 		obj.addComponent(new Engine.ColliderComponent(new Engine.ColliderBox2D(new Engine.Rectangle2D(-.5, -.5, 1, 1))));
 				game.addToGame(obj);
 
-		obj = new Engine.PhysicsBody(null, new THREE.Vector3(1,0,0), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
+		obj = new Engine.PhysicsBody(null, null, new THREE.Vector3(1,0,0), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
 		obj.addComponent(new Engine.SpriteComponent(game.getAssetManager().getAsset('derpbutt').getResource(), new THREE.Vector3(1,1, 1)));
 		obj.addComponent(new Engine.ColliderComponent(new Engine.ColliderBox2D(new Engine.Rectangle2D(-.5, -.5, 1, 1))));
 				game.addToGame(obj);
-		obj = new Engine.PhysicsBody(null, new THREE.Vector3(2,0,0), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
+		obj = new Engine.PhysicsBody(null, null, new THREE.Vector3(2,0,0), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
 		obj.addComponent(new Engine.SpriteComponent(game.getAssetManager().getAsset('derpbutt').getResource(), new THREE.Vector3(1,1, 1)));
 		obj.addComponent(new Engine.ColliderComponent(new Engine.ColliderBox2D(new Engine.Rectangle2D(-.5, -.5, 1, 1))));
 				game.addToGame(obj);
-		obj = new Engine.PhysicsBody(null, new THREE.Vector3(3,0,0), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
+		obj = new Engine.PhysicsBody(null, null, new THREE.Vector3(3,0,0), game, 1, 0, Engine.PhysicsBody.PhysicsType.Kinematic);
 		obj.addComponent(new Engine.SpriteComponent(game.getAssetManager().getAsset('derpbutt').getResource(), new THREE.Vector3(1,1, 1)));
 		obj.addComponent(new Engine.ColliderComponent(new Engine.ColliderBox2D(new Engine.Rectangle2D(-.5, -.5, 1, 1))));
 				game.addToGame(obj);

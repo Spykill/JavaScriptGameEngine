@@ -1,8 +1,8 @@
 (function(E){
 	E.PhysicsBody = class extends E.GameObject {
-		constructor(parent, localPosition, game, mass, restitution, physicsType)
+		constructor(objId, parent, localPosition, game, mass, restitution, physicsType)
 		{
-			super(parent, localPosition, game);
+			super(objId, parent, localPosition, game);
 
 			this._goType = E.GameObject.GameObjectType.Physics;
 

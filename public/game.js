@@ -1,8 +1,8 @@
 (function(E){
 	E.Game = class {
 		/**
-		 * @param input: Engine.Input; The input that this game instance will use.
-		 * @param frame: Engine.Frame; The frame that we will be drawing to.
+		 * @param input: Engine.Input | undefined; The input that this game instance will use. Undefined if no input
+		 * @param frame: Engine.Frame | undefined; The frame that we will be drawing to. Undefined if not rendering
 		 * @param gameFPS: float; The number of game cycles that we should get per second
 		 * @param frameSkip: int; The max number of game updates to do before rendering a frame.
 		 */
@@ -13,7 +13,7 @@
 			this._assetManager = new E.AssetManager();
 
 			this._deltaTime = 0;
-			this._lastUpdateTime = Utility.getTime();
+			this._lastUpdateTime = Utility.getTime() * E.Game.TIME_FLT_PNT_ADJ;
 
 			this._gameTime = 0;
 
@@ -59,30 +59,31 @@
 		startGameLoop()
 		{
 			this._gameRunning = true;
-			var self = this;
-
-			this._runGameLoop(this);
+			this._runGameLoop();
 		}
 
-		_runGameLoop(self)
+		_runGameLoop()
 		{
 			var newTime = Utility.getTime() * E.Game.TIME_FLT_PNT_ADJ;
-			this._deltaTime += (newTime - self._lastUpdateTime);
+			this._deltaTime += (newTime - this._lastUpdateTime);
+			this._lastUpdateTime = newTime;
 
 			var frame = 0;
 
-			while (this._deltaTime > self._updateTime && frame++ < self._frameSkip)
+			while (this._deltaTime > this._updateTime && frame++ < this._frameSkip)
 			{
-				this._deltaTime -= self._updateTime;
-				self._gameTime += self._updateTime / E.Game.TIME_FLT_PNT_ADJ;
+				this._deltaTime -= this._updateTime;
+				this._gameTime += this._updateTime / E.Game.TIME_FLT_PNT_ADJ;
 
-				self.update(self._updateTime / E.Game.TIME_FLT_PNT_ADJ);
+				this.update(this._updateTime / E.Game.TIME_FLT_PNT_ADJ);
 			}
 
-			self.render(this._deltaTime > self._updateTime ? 1 : this._deltaTime / self._updateTime);
+			this.render(this._deltaTime > this._updateTime ? 1 : this._deltaTime / this._updateTime);
 
-			self._input.flush();
-			requestAnimationFrame(function(){ self._runGameLoop(self); });
+			if(this._input)
+			this._input.flush();
+			var self = this;
+			requestAnimationFrame(function(){ self._runGameLoop(); });
 		}
 
 		/**
@@ -142,7 +143,7 @@
 
 		render(interpolation)
 		{
-			if (this._frame)
+			if (this.canRender() && this._frame)
 			{
 				for (var i = 0; i < this._gameObjects.length; i++)
 				{
@@ -282,6 +283,15 @@
 		getInput()
 		{
 			return this._input;
+		}
+
+		/**
+		 * Can this game be rendered?
+		 * @return: bool; Yay or nay?
+		 */
+		canRender()
+		{
+			return this._frame != undefined;
 		}
 
 		/**

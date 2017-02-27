@@ -1,12 +1,26 @@
 (function(E){
 	E.GameObject = class {
 		/**
-		 * @param parent: GameObject; The parent object
-		 * @param localPosition: Vector3; The positon relative to the parent (world if parent = null)
-		 * @param game: Game; The game that this object is associated with
+		 * @param objId: string | undefined | null; The ID of this gameobject or undefined/null to randomly generate the ID
+		 * @param parent: Engine.GameObject; The parent object
+		 * @param localPosition: THREE.Vector3; The positon relative to the parent (world if parent = null)
+		 * @param game: Engine.Game; The game that this object is associated with
 		 */
-		constructor(parent, localPosition, game)
+		constructor(objId, parent, localPosition, game)
 		{
+			if(objId)
+			{
+				this._objId = objId;
+			}
+			else
+			{
+				this._objId = "";
+				for(var i = 0; i < 8; i++)
+				{
+					this._objId += String.fromCharCode(Math.floor(Math.random()*65535));
+				}
+			}
+
 			this._goType = E.GameObject.GameObjectType.Object;
 
 			this._game = game;
@@ -167,6 +181,11 @@
 		getGame()
 		{
 			return this._game;
+		}
+
+		getId()
+		{
+			return this._objId;
 		}
 
 		/**

@@ -175,7 +175,7 @@
 	E.Syncable = class
 	{
 		/**
-		 * @param netId: string | undefined; The network ID of this object OR undefined to generate a new object
+		 * @param netId: string | undefined | null; The network ID of this object OR undefined to generate a new object
 		 */
 		constructor(netId)
 		{

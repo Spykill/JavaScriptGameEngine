@@ -40,7 +40,7 @@
 		 */
 		sendMessage(data)
 		{
-			this.connection.send(data);
+			this.connection.emit("message", data);
 		}
 	};
 
@@ -118,7 +118,7 @@
 		 */
 		sendPacket(packet)
 		{
-			this.connection.send(packet.encode());
+			this.sendMessage(packet.encode());
 		}
 	};
 

@@ -1,4 +1,4 @@
-(function(E){
+var Engine = (function(E){
 	E.PhysicsBody = class extends E.GameObject {
 		constructor(objId, parent, localPosition, game, mass, restitution, physicsType)
 		{
@@ -204,4 +204,6 @@
 		Kinematic: 1,
 		Trigger: 2
 	};
+
+	return E;
 }(Engine || {}))

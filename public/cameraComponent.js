@@ -1,4 +1,4 @@
-(function(E){
+var Engine = (function(E){
 	E.CameraComponent = class extends E.Component {
 		constructor()
 		{
@@ -23,4 +23,5 @@
 			this.getOwner().getGame().getRenderCamera().position.set(pos.x, pos.y, pos.z);
 		}
 	};
+	return E;
 }(Engine || {}))

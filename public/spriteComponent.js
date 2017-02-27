@@ -1,4 +1,4 @@
-(function(E){
+var Engine = (function(E){
 	E.SpriteComponent = class extends E.Component
 	{
 		constructor(texture, scale, material)
@@ -50,4 +50,6 @@
 	};
 
 	E.SpriteComponent.SpriteGeometry = new THREE.PlaneGeometry(1,1);
+
+	return E;
 }(Engine || {}))

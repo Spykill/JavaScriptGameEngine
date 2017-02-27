@@ -1,4 +1,4 @@
-(function(E){
+var Engine = (function(E){
 	E.AssetManager = class {
 		constructor()
 		{
@@ -114,4 +114,6 @@
 			return false;
 		}
 	};
+
+	return E;
 }(Engine || {}))

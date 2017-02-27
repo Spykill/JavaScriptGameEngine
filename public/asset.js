@@ -1,4 +1,4 @@
-(function(E){
+var Engine = (function(E){
 	E.Asset = class {
 		constructor()
 		{
@@ -125,4 +125,6 @@
 			return this._loadedTexture;
 		}
 	};
+
+	return E;
 }(Engine || {}))

@@ -1,4 +1,4 @@
-(function(E){
+var Engine = (function(E){
 	E.Frame = class {
 		constructor()
 		{
@@ -82,4 +82,6 @@
 			return input;
 		}
 	};
+
+	return E;
 }(Engine || {}))

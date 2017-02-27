@@ -1,4 +1,4 @@
-(function(E){
+var Engine = (function(E){
 	E.Input = class {
 		constructor()
 		{
@@ -174,4 +174,6 @@
 			this._mouseWheel += evt.deltaY;
 		}
 	};
+
+	return E;
 }(Engine || {}));

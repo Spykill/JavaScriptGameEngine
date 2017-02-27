@@ -1,4 +1,4 @@
-(function(E){
+var Engine = (function(E){
 	E.Networking = class {
 		constructor()
 		{
@@ -356,4 +356,6 @@
 			return this._writingSync[netId];
 		}
 	};
+
+	return E;
 }(Engine || {}))

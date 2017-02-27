@@ -1,4 +1,4 @@
-(function(E){
+var Engine = (function(E){
 	E.LerpProperty = class {
 		/**
 		 * @param getFunction: Object function(); Gets the current value of the property
@@ -128,4 +128,6 @@
 		 */
 		render(interpolation) {}
 	};
+
+	return E;
 }(Engine || {}))

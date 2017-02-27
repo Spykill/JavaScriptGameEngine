@@ -1,4 +1,4 @@
-(function(E){
+var Engine = (function(E){
 	E.Collider = class {
 		constructor()
 		{
@@ -151,4 +151,6 @@
 			}
 		}
 	};
+
+	return E;
 }(Engine || {}))

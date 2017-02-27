@@ -1,6 +1,6 @@
-var Utility = (function(module){
+var Utility = (function(U){
 
-	module.cancelEventBubble = function(e)
+	U.cancelEventBubble = function(e)
 	{
 		var evt = e ? e:window.event;
 		if (evt.stopPropagation)    evt.stopPropagation();
@@ -9,15 +9,15 @@ var Utility = (function(module){
 
 	if (window.performance.now)
 	{
-		module.getTime = function() { return window.performance.now(); };
+		U.getTime = function() { return window.performance.now(); };
 	}
 	else if(window.performance.webkitNow)
 	{
-		module.getTime = function() { return window.performance.webkitNow(); };
+		U.getTime = function() { return window.performance.webkitNow(); };
 	}
 	else
 	{
-		module.getTime = function() { return new Date().getTime(); }
+		U.getTime = function() { return new Date().getTime(); }
 	}
 
 	Array.prototype.indexOf || (Array.prototype.indexOf = function(d, e) {
@@ -49,5 +49,5 @@ var Utility = (function(module){
 		return false;
 	};
 
-	return module;
+	return U;
 }(Utility || {}));

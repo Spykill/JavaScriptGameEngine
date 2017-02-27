@@ -1,4 +1,4 @@
-(function(E){
+var Engine = (function(E){
 	E.GameObject = class {
 		/**
 		 * @param objId: string | undefined | null; The ID of this gameobject or undefined/null to randomly generate the ID
@@ -209,4 +209,6 @@
 		Object: 0,
 		Physics: 1
 	};
+
+	return E;
 }(Engine || {}))

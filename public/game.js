@@ -1,4 +1,4 @@
-(function(E){
+var Engine = (function(E){
 	E.Game = class {
 		/**
 		 * @param input: Engine.Input | undefined; The input that this game instance will use. Undefined if no input
@@ -308,4 +308,5 @@
 
 	E.Game.TIME_FLT_PNT_ADJ = 1000000.0;
 
+	return E;
 }(Engine || {}))

@@ -1,4 +1,4 @@
-(function(E){
+var Engine = (function(E){
 	E.NetworkUtils = {
 		Int: {},
 		Float: {},
@@ -126,4 +126,6 @@
 		strContainer.str = strContainer.str.substring(len + 1);
 		return val;
 	};
+
+	return E;
 }(Engine || {}))

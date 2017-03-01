@@ -12,7 +12,7 @@ var Engine = (function(E){
 		 */
 		constructor(name, offset, texture, scale, material, angleToScreen, rotation)
 		{
-			super();
+			super(name, offset);
 
 			this.angleToScreen = angleToScreen || 0;
 			this.rotation = rotation || 0;

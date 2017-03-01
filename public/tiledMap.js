@@ -53,29 +53,8 @@ var Engine = (function(E){
 
 		_createLayerMaterial(i, go, game)
 		{
-			var dim = (this.width > this.height ? this.width : this.height);
-			var twoN = 1;
-			while(twoN < dim)
-			{
-				twoN = twoN << 1;
-			}
-
-			var arrayBuff = new ArrayBuffer(twoN * twoN * 3);
+			var arrayBuff = new ArrayBuffer(this.width * this.height * 3);
 			var array8 = new Uint8Array(arrayBuff);
-
-			var j = 0;
-			for(var y = 0; y < this.height; y++)
-			{
-				for(var x = 0; x < this.width; x++)
-				{
-					var value = this.tileLayers[i][j++];
-					var ind = (x + y * twoN)*3;
-					array8[ind] = (value & 0x000000ff);
-					array8[ind + 1] = (value & 0x0000ff00) >> 8;
-					array8[ind + 2] = (value & 0x00ff0000) >> 16;
-				}
-			}
-			/*
 			for(var j = 0, il = this.tileLayers[i].length; j < il; j++)
 			{
 				var value = this.tileLayers[i][j];
@@ -83,28 +62,26 @@ var Engine = (function(E){
 				array8[j * 3] = (value & 0x000000ff);
 				array8[j * 3 + 1] = (value & 0x0000ff00) >> 8;
 				array8[j * 3 + 2] = (value & 0x00ff0000) >> 16;
-			}*/
+			}
 
 			var dataTex = new THREE.DataTexture(array8,
-				twoN,
-				twoN,
+				this.width, this.height,
 				THREE.RGBFormat,
 				THREE.UnsignedByteType,
 				THREE.UVMapping,
 				THREE.ClampToEdgeWrapping,
 				THREE.ClampToEdgeWrapping,
 				THREE.NearestFilter,
-				THREE.NearestMipMapFilter);
+				THREE.NearestFilter);
 			dataTex.needsUpdate = true;
 
 			var tWidth = this.tileWidth;
-			var tHeight = this.tileWidth;
+			var tHeight = this.tileHeight;
 			var mat = new THREE.ShaderMaterial({
 				uniforms: {
 					mapSize: {type: 'v2', value: new THREE.Vector2(this.width * tWidth, this.height * tHeight)},
 					inverseLayerSize: {type: 'v2', value: new THREE.Vector2(1.0 / this.width, 1.0 / this.height)},
 					inverseTilesetSize: {type: 'v2', value: new THREE.Vector2(1.0 / this.file.tilesets[0].imagewidth, 1.0 / this.file.tilesets[0].imageheight)},
-					mapToTileRatio: {type: 'v2', value: new THREE.Vector2(this.width / twoN, this.height / twoN)},
 
 					tileSize: {type: 'v2', value: new THREE.Vector2(tWidth, tHeight)},
 					numTiles: {type: 'v2', value: new THREE.Vector2(Math.floor(this.file.tilesets[0].imagewidth / (tWidth + 2)), Math.floor(this.file.tilesets[0].imageheight / (tHeight + 2)))},

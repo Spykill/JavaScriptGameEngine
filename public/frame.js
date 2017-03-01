@@ -30,6 +30,7 @@ var Engine = (function(E){
 
 			this._renderer = new THREE.WebGLRenderer();
 			this._renderer.setSize(window.innerWidth, window.innerHeight);
+
 			document.body.appendChild(this._renderer.domElement);
 
 			var self = this;

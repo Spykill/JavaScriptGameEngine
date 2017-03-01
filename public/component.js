@@ -67,9 +67,21 @@ var Engine = (function(E){
 	}
 
 	E.Component = class {
-		constructor()
+		/**
+		 * @param name: string; The name of the component. This should be unique. Given a random string if none provided.
+		 */
+		constructor(name)
 		{
 			this._owner = null;
+			this._name = name;
+			if(!name)
+			{
+				this._name = "";
+				for(var i = 0; i < 8; i++)
+				{
+					this._name += String.fromCharCode(Math.floor(Math.random() * 65535));
+				}
+			}
 		}
 
 		/**
@@ -127,6 +139,23 @@ var Engine = (function(E){
 		 * @param interpolation: float; The normalized (0-1) decimal between the previous state and the current state.
 		 */
 		render(interpolation) {}
+	};
+
+	E.SceneComponent = class extends E.Component {
+		/**
+		 * @param name: string; The name of the component. Should be unique. Random name if none provided
+		 * @param offset: THREE.Vector3; The offset from the object. Default is (0,0,0)
+		 */
+		constructor(name, offset)
+		{
+			super(name);
+			this.offset = offset || new THREE.Vector3();
+		}
+
+		getPosition()
+		{
+			return this.getOwner().getGlobalPosition().add(this.offset);
+		}
 	};
 
 	return E;

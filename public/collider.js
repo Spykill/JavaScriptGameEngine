@@ -129,9 +129,9 @@ var Engine = (function(E){
 	};
 
 	E.ColliderComponent = class extends E.Component {
-		constructor(collider)
+		constructor(name, collider)
 		{
-			super();
+			super(name);
 			this._collider = collider;
 		}
 

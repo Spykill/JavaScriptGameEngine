@@ -49,5 +49,11 @@ var Utility = (function(U){
 		return false;
 	};
 
+	U.combine = function(a, b)
+	{
+		for (var attrname in a) { a[attrname] = b[attrname]; }
+		return a;
+	}
+
 	return U;
 }(Utility || {}));

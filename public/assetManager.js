@@ -1,3 +1,4 @@
+
 var Engine = (function(E){
 	E.AssetManager = class {
 		constructor()
@@ -17,6 +18,11 @@ var Engine = (function(E){
 			this._assets[assetName] = asset;
 		}
 
+		hasAsset(assetName)
+		{
+			return this._assets[assetName];
+		}
+
 		/**
 		 * Gets the asset by its name
 		 * @param assetName: string; The asset name
@@ -26,13 +32,42 @@ var Engine = (function(E){
 			return this._assets[assetName];
 		}
 
+		getOrLoadAsset(assetName, callback, error)
+		{
+			if(!this._assets[assetName])
+			{
+				return;
+			}
+			switch(this._assets[assetName].getStatus())
+			{
+				case 0:
+					if(callback) {this._assets[assetName].addCompletedListener(callback);}
+					if(error) {this._assets[assetName].addErrorListener(error);}
+					this._assets[assetName].load();
+					break;
+				case 1:
+					if(callback) {callback(this._assets[assetName].getResource());}
+					break;
+				case 2:
+					if(error) {error(this._assets[assetName].getError());}
+					break;
+				case 3:
+					if(callback) {this._assets[assetName].addCompletedListener(callback);}
+					if(error) {this._assets[assetName].addErrorListener(error);}
+					break;
+			}
+		}
+
 		/**
 		 * Loads the asset by its name
 		 * @param assetName: string; The asset name
 		 */
 		loadAsset(assetName)
 		{
-			this._assets[assetName].load();
+			if(this._assets[assetName].getStatus() == 0)
+			{
+				this._assets[assetName].load();
+			}
 		}
 
 		/**
@@ -43,7 +78,7 @@ var Engine = (function(E){
 		{
 			for (var k in this._groups[groupName])
 			{
-				this._groups[groupName][k].load();
+				this.loadAsset(k);
 			}
 		}
 
@@ -56,7 +91,10 @@ var Engine = (function(E){
 			var ordered = new Array();
 			for (var k in this._groups[groupName])
 			{
-				ordered.push(this._groups[groupName][k]);
+				if(this._groups[groupName][k].getStatus() == 0)
+				{
+					ordered.push(this._groups[groupName][k]);
+				}
 			}
 
 			var v = { ind: 1 };
@@ -90,9 +128,12 @@ var Engine = (function(E){
 		{
 			for (var k in this._groups[groupName])
 			{
-				if (this._groups[groupName][k].status != 1)
+				if(this._groups[groupName].hasOwnProperty(k))
 				{
-					return false;
+					if (this._groups[groupName][k].status != 1)
+					{
+						return false;
+					}
 				}
 			}
 			return true;
@@ -106,9 +147,12 @@ var Engine = (function(E){
 		{
 			for (var k in this._groups[groupName])
 			{
-				if (this._groups[groupName][k].status == -1)
+				if(this._groups[groupName].hasOwnProperty(k))
 				{
-					return true;
+					if (this._groups[groupName][k].status == -1)
+					{
+						return true;
+					}
 				}
 			}
 			return false;

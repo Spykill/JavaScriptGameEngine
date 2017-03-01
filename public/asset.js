@@ -32,7 +32,7 @@ var Engine = (function(E){
 		/**
 		 * Begins loading the asset. This should be done in a non-blocking way. This should call _loadComplete at the end. Implement this when making custom assets.
 		 */
-		load() {}
+		load() {this._status = 3;}
 
 		/**
 		 * Makes ending the load sequence a lot easier. Just call this when you're done loading.
@@ -108,6 +108,7 @@ var Engine = (function(E){
 
 		load()
 		{
+			super.load();
 			var loader = new THREE.TextureLoader();
 			var self = this;
 			loader.load(this._assetURL, function(texture){
@@ -123,6 +124,33 @@ var Engine = (function(E){
 		getResource()
 		{
 			return this._loadedTexture;
+		}
+	};
+
+	E.TextAsset = class extends E.Asset {
+		constructor(assetURL, dataType)
+		{
+			super();
+			this._assetURL = assetURL;
+			this._dataType = dataType || 'text';
+			this._loadedText = null;
+		}
+
+		load()
+		{
+			super.load();
+			var self = this;
+			$.ajax({url: this._assetURL, dataType: this._dataType }).done(function(data){
+				self._loadedText = data;
+				self.loadComplete_();
+			}).fail(function(err){
+				self.loadFailed_(err);
+			});
+		}
+
+		getResource()
+		{
+			return this._loadedText;
 		}
 	};
 

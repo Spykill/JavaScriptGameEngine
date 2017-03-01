@@ -1,15 +1,19 @@
 var Engine = (function(E){
-	E.CameraComponent = class extends E.Component {
-		constructor()
+	E.CameraComponent = class extends E.SceneComponent {
+		/**
+		 * @param name: string; The name of the component. Should be unique. Random name if none provided
+		 * @param offset: THREE.Vector3; The offset from the object.
+		 */
+		constructor(name, offset)
 		{
-			super();
+			super(name, offset);
 			this._renderPos = null;
 		}
 
 		onAdded()
 		{
 			var self = this;
-			this._renderPos = new Engine.LerpVectorProperty(function(){ return self.getOwner().getGlobalPosition(); });
+			this._renderPos = new Engine.LerpVectorProperty(function(){ return self.getPosition(); });
 		}
 
 		update(deltaTime)

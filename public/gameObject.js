@@ -123,6 +123,41 @@ var Engine = (function(E){
 		}
 
 		/**
+		 * Gets the first component of typeT
+		 * @param typeT: type; The type of the component to get.
+		 * @return: typeT | null; A component of typeT, null if a component of typeT does not exist.
+		 */
+		getComponent(typeT)
+		{
+			for(var i = 0; i < this._components.length; i++)
+			{
+				if(this._components[i] instanceof typeT)
+				{
+					return this._components[i];
+				}
+			}
+			return null;
+		}
+
+		/**
+		 * Gets all components of typeT
+		 * @param typeT: type; The type of the component to get.
+		 * @return: [typeT]; An array of components of typeT
+		 */
+		getAllComponents(typeT)
+		{
+			var arr = new Array();
+			for(var i = 0; i < this._components.length; i++)
+			{
+				if(this._components[i] instanceof typeT)
+				{
+					arr.push(this._components[i]);
+				}
+			}
+			return arr;
+		}
+
+		/**
 		 * Called when this object is added to the scene.
 		 */
 		onAddedToScene()
